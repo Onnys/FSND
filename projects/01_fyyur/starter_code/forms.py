@@ -1,7 +1,8 @@
 from datetime import datetime
 from flask_wtf import Form
-from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField
+from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField, validators
 from wtforms.validators import DataRequired, AnyOf, URL
+
 
 class ShowForm(Form):
     artist_id = StringField(
@@ -13,8 +14,9 @@ class ShowForm(Form):
     start_time = DateTimeField(
         'start_time',
         validators=[DataRequired()],
-        default= datetime.today()
+        default=datetime.today()
     )
+
 
 class VenueForm(Form):
     name = StringField(
@@ -85,8 +87,18 @@ class VenueForm(Form):
     phone = StringField(
         'phone'
     )
+    website = StringField(
+        'website'
+    )
     image_link = StringField(
         'image_link'
+    )
+    seeking_talent = BooleanField(
+        'seeking_talent'
+    )
+
+    seeking_description = StringField(
+        'seeking_description'
     )
     genres = SelectMultipleField(
         # TODO implement enum restriction
@@ -116,6 +128,7 @@ class VenueForm(Form):
     facebook_link = StringField(
         'facebook_link', validators=[URL()]
     )
+
 
 class ArtistForm(Form):
     name = StringField(
@@ -182,7 +195,7 @@ class ArtistForm(Form):
     )
     phone = StringField(
         # TODO implement validation logic for state
-        'phone'
+        'phone', [validators.Length(min=4, max=25)]
     )
     image_link = StringField(
         'image_link'
@@ -215,6 +228,19 @@ class ArtistForm(Form):
     facebook_link = StringField(
         # TODO implement enum restriction
         'facebook_link', validators=[URL()]
+    )
+    website = StringField(
+        'website'
+    )
+    image_link = StringField(
+        'image_link'
+    )
+    seeking_venue = BooleanField(
+        'seeking_venue'
+    )
+
+    seeking_description = StringField(
+        'seeking_description'
     )
 
 # TODO IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
